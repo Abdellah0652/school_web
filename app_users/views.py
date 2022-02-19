@@ -9,6 +9,7 @@ from curriculum.models import Standard
 from .models import UserProfileInfo, Contact
 from django.views.generic import CreateView
 
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -18,7 +19,7 @@ def user_login(request):
 
         if user:
             if user.is_active:
-                login(request,user)
+                login(request, user)
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("ACCOUNT IS DEACTIVATED")
@@ -41,7 +42,6 @@ def user_logout(request):
 #     return render(request,'app_users/index.html')
 
 def register(request):
-
     registered = False
 
     if request.method == "POST":
@@ -65,12 +65,13 @@ def register(request):
         profile_form = UserProfileInfoForm()
 
     return render(request, 'app_users/registration.html',
-                            {'registered':registered,
-                             'user_form':user_form,
-                             'profile_form':profile_form})
+                  {'registered': registered,
+                   'user_form': user_form,
+                   'profile_form': profile_form})
+
 
 class HomeView(TemplateView):
-    template_name = 'app_users/index.html'
+    template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -79,6 +80,7 @@ class HomeView(TemplateView):
         context['standards'] = standards
         context['teachers'] = teachers
         return context
+
 
 class ContactView(CreateView):
     model = Contact
